@@ -1,0 +1,56 @@
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+public class ExcelToPdf {
+    public static  void  pdf() {
+
+        try{
+
+            Document document = new Document();
+
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("E:\\chessresults.pdf"));//to generate file name
+            document.open();//to specify document to open
+
+            document.add(new Paragraph( "" + ClassExcel.excelDataTop.get(0).getLine1()));//to call new paragraph
+            document.add(new Paragraph( "" + ClassExcel.excelDataTop.get(0).getLine2()));//to call new paragraph
+            document.add(new Paragraph( "" + ClassExcel.excelDataTop.get(0).getLine3()));//to call new paragraph
+            document.add(new Paragraph( "" + ClassExcel.excelDataTop.get(0).getLine4()));//to call new paragraph
+
+
+            PdfPTable table = new PdfPTable(new float[]{3f, 18f,3f,3f,10f,10f});//to specify size of colum
+
+            for (int i = 0; i < ClassExcel.dataFromExcel.size(); i++)
+            {
+              table.addCell(ClassExcel.dataFromExcel.get(i).getNo());
+              table.addCell(ClassExcel.dataFromExcel.get(i).getName());
+              table.addCell(ClassExcel.dataFromExcel.get(i).getId());
+              table.addCell(ClassExcel.dataFromExcel.get(i).getFed());
+              table.addCell(ClassExcel.dataFromExcel.get(i).getRtg());
+              table.addCell(ClassExcel.dataFromExcel.get(i).getClub());
+
+            }//End for
+
+            document.add(table);
+            document.close();
+            writer.close();
+
+
+        } catch (DocumentException e)
+        {
+            e.printStackTrace();
+
+
+        }catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+}
