@@ -1,0 +1,80 @@
+
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+
+public class ClassExcel {
+    public  static ArrayList <setInfo> dataFromExcel = new ArrayList <setInfo>();
+    public  static  ArrayList <Data> excelDataTop =  new ArrayList <Data>();
+
+    private static final String FileName = "E:\\chessresults.xlsx";// To generate file name
+
+    public static void collectData(){
+
+        try {
+
+            FileInputStream excelFile = new FileInputStream(new File(FileName));//"/tmp/MyFirstExcel.xlsx"
+            XSSFWorkbook workbook = new XSSFWorkbook(excelFile);//create object classes which act as an Excel Workbook
+            XSSFSheet dataTopSheet = workbook.getSheetAt(0);//classes which act as an Excel Worksheet
+
+            String c1, c2, c3, c4, c5, c6, I1,I2,I3,I4;
+
+            XSSFRow Line1 = dataTopSheet.getRow(0);//defines an Excel cell addressed in reference to a row.
+            XSSFRow Line2 = dataTopSheet.getRow(1);//defines an Excel cell addressed in reference to a row.
+            XSSFRow Line3 = dataTopSheet.getRow(2);//defines an Excel cell addressed in reference to a row.
+            XSSFRow Line4 = dataTopSheet.getRow(3);//defines an Excel cell addressed in reference to a row.
+
+            I1 = Line1.getCell(0).getStringCellValue();//to insert data from table
+            I2 = Line2.getCell(0).getStringCellValue();//to insert data from table
+            I3 = Line3.getCell(0).getStringCellValue();//to insert data from table
+            I4 = Line4.getCell(0).getStringCellValue();//to insert data from table
+
+            excelDataTop.add(new Data(I1, I2, I3, I4));
+
+
+            for (int i = 4 ;  i < 155; i++)
+            {
+                XSSFRow row = dataTopSheet.getRow(i);
+
+                c1 = row.getCell(0).toString();//defines an Excel cell addressed in reference to a row.
+                c2 = row.getCell(2).toString();//defines an Excel cell addressed in reference to a row.
+                c3 = row.getCell(3).toString();//defines an Excel cell addressed in reference to a row.
+                c4 = row.getCell(4).toString();//defines an Excel cell addressed in reference to a row.
+                c5 = row.getCell(5).toString();//defines an Excel cell addressed in reference to a row.
+                c6 = row.getCell(6).toString();//defines an Excel cell addressed in reference to a row.
+
+                dataFromExcel.add(new setInfo(c1, c2, c3, c4, c5, c6));
+            }//end for
+
+                workbook.close();
+                excelFile.close();
+
+                System.out.println("" + excelDataTop.get(0).getLine1());
+                System.out.println("" + excelDataTop.get(0).getLine2());
+                System.out.println("" + excelDataTop.get(0).getLine3());
+                System.out.println("" + excelDataTop.get(0).getLine4());
+
+            for (int i = 0; i < dataFromExcel.size(); i++) {
+
+
+                System.out.printf("%-8s", dataFromExcel.get(i).getNo());//to print size colum data top table
+                System.out.printf("%-40s",dataFromExcel.get(i).getName());//to print size colum data top table
+                System.out.printf("%-8s", dataFromExcel.get(i).getId());//to print size colum data top table
+                System.out.printf("%-10s",dataFromExcel.get(i).getFed());//to print size colum data top table
+                System.out.printf("%-6s", dataFromExcel.get(i).getRtg());//to print size colum data top table
+                System.out.printf("%-6s", dataFromExcel.get(i).getClub());//to print size colum data top table
+                System.out.println();
+            }
+
+                }
+                catch (Exception e)
+                {
+                 e.printStackTrace();
+                }
+
+}
+}
