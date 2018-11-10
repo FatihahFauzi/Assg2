@@ -1,0 +1,18 @@
+
+
+public class mainClass {
+
+    public static void main(String[] args) {
+
+
+            ClassExcel.collectData();
+            System.out.println("\n DATA FROM EXCEL SUCCESS");
+
+
+            ExcelToPdf.pdf();
+            System.out.println("\n DATA FROM EXCEL SUCCESS CONVERT TO PDF");
+
+
+
+    }
+}
